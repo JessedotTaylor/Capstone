@@ -1,0 +1,4 @@
+https://learndataanalysis.org/create-an-app-to-view-folders-and-files-pyqt5-tutorial/
+https://doc.qt.io/qt-5/qtwidgets-itemviews-dirview-example.html
+https://www.tutorialspoint.com/pyqt/pyqt_qfiledialog_widget.htm
+https://pythonspot.com/pyqt5-image/
