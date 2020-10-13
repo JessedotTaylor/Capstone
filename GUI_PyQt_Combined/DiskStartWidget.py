@@ -15,19 +15,20 @@ import sys
 class Ui_DiskStartWidget(QtWidgets.QWidget):
     switch_window = QtCore.pyqtSignal(str, str)
 
-    def __init__(self, dirPath):
+    def __init__(self, dirPath, width, height, showPresetButton=True):
+        self.showPresetButton = showPresetButton
         QtWidgets.QWidget.__init__(self)
         self.setObjectName("DiskStartWidget")
-        self.resize(1280, 1024)
+        self.resize(width, height)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setMinimumSize(QtCore.QSize(1280, 1024))
-        self.setMaximumSize(QtCore.QSize(1280, 1024))
+        self.setMinimumSize(QtCore.QSize(width, height))
+        self.setMaximumSize(QtCore.QSize(width, height))
         self.verticalLayoutWidget = QtWidgets.QWidget(self)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 1281, 1021))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, width, height))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -55,21 +56,15 @@ class Ui_DiskStartWidget(QtWidgets.QWidget):
         self.verticalLayout.addLayout(self.horizontalLayout_3)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        # self.ExplorerWidget = FileExplorer(self.verticalLayoutWidget)
-        # sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        # sizePolicy.setHorizontalStretch(0)
-        # sizePolicy.setVerticalStretch(0)
-        # sizePolicy.setHeightForWidth(self.ExplorerWidget.sizePolicy().hasHeightForWidth())
-        # self.ExplorerWidget.setSizePolicy(sizePolicy)
-        # self.ExplorerWidget.setObjectName("widget")
-        # 
+
         self.model = QtWidgets.QFileSystemModel() 
         self.model.setRootPath(dirPath)
         self.tree = QtWidgets.QTreeView()
         self.tree.setModel(self.model)
         self.tree.setRootIndex(self.model.index(dirPath))
-        self.tree.setColumnWidth(0, 250)
+        self.tree.setColumnWidth(0, 1024//4)
         self.tree.setAlternatingRowColors(True)
+        self.tree.clicked.connect(self.onClicked)
 
         self.horizontalLayout_2.addWidget(self.tree)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
@@ -78,18 +73,21 @@ class Ui_DiskStartWidget(QtWidgets.QWidget):
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
 
-        self.SaveAsPresetButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.SaveAsPresetButton.sizePolicy().hasHeightForWidth())
-        self.SaveAsPresetButton.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        self.SaveAsPresetButton.setFont(font)
-        self.SaveAsPresetButton.setObjectName("SaveAsPresetButton")
-        self.horizontalLayout.addWidget(self.SaveAsPresetButton)
-        self.SaveAsPresetButton.clicked.connect(self.savePreset)
+        
+        if showPresetButton:
+            self.SaveAsPresetButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
+            sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+            sizePolicy.setHorizontalStretch(0)
+            sizePolicy.setVerticalStretch(0)
+            sizePolicy.setHeightForWidth(self.SaveAsPresetButton.sizePolicy().hasHeightForWidth())
+            self.SaveAsPresetButton.setSizePolicy(sizePolicy)
+            font = QtGui.QFont()
+            font.setPointSize(16)
+            self.SaveAsPresetButton.setFont(font)
+            self.SaveAsPresetButton.setObjectName("SaveAsPresetButton")
+            self.horizontalLayout.addWidget(self.SaveAsPresetButton)
+            self.SaveAsPresetButton.clicked.connect(self.savePreset)
+            self.SaveAsPresetButton.setEnabled(False)
 
         self.NextButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -103,17 +101,21 @@ class Ui_DiskStartWidget(QtWidgets.QWidget):
         self.NextButton.setObjectName("NextButton")
         self.horizontalLayout.addWidget(self.NextButton)
         self.NextButton.clicked.connect(lambda: self.switch("next"))
+        self.NextButton.setEnabled(False)
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.retranslateUi()
         #QtCore.QMetaObject.connectSlotsByName()
 
+        self.supportedFiles = ['csv'] # 'txt', 'json'?
+
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("DiskStartWidget", "Form"))
         self.backButton.setText(_translate("DiskStartWidget", "Back"))
-        self.SaveAsPresetButton.setText(_translate("DiskStartWidget", "Save As Preset"))
+        if self.showPresetButton:
+            self.SaveAsPresetButton.setText(_translate("DiskStartWidget", "Save As Preset"))
         self.NextButton.setText(_translate("DiskStartWidget", "Next Button"))
 
     def setSrcDir(self, srcDir):
@@ -124,7 +126,23 @@ class Ui_DiskStartWidget(QtWidgets.QWidget):
 
     def savePreset(self):
         print("Save selected preset called")
-# # from fileexplorer import FileExplorer
+    
+    def onClicked(self, index):
+        # self.sender() == self.treeView
+        # self.sender().model() == self.fileSystemModel
+        path = self.sender().model().filePath(index)
+        obj = path.split('.')
+        print(obj)
+        if len(obj) > 1 and obj[-1] in self.supportedFiles:
+            if self.showPresetButton:
+                self.SaveAsPresetButton.setEnabled(True)
+            self.NextButton.setEnabled(True)
+            self.path = path
+        else: 
+            if self.showPresetButton:
+                self.SaveAsPresetButton.setEnabled(False)
+            self.NextButton.setEnabled(False)
+
 
 
 if __name__ == "__main__":
@@ -134,7 +152,15 @@ if __name__ == "__main__":
     # sys.exit(app.exec_())
     
     app = QtWidgets.QApplication(sys.argv)
-    win = Ui_DiskStartWidget("C:\\")
+    import platform
+    os = platform.system()
+    if os == 'Darwin':
+        startFilePath = '/Users/jessetaylor Mk3/Desktop'
+    elif os == 'Windows':
+        startFilePath = 'C:\\'
+    elif os == 'Linux':
+        startFilePath = '/home/pi/Documents/GUI_PyQt_Combined'
+    win = Ui_DiskStartWidget(startFilePath)
 
     win.show()
     sys.exit(app.exec_())

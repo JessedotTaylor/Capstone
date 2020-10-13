@@ -84,26 +84,10 @@ class Ui_Form(QtWidgets.QWidget):
         self.switch_window.emit(switchTo, "preset")
 
 
-if __name__ == "__main__":
-    # app = QtWidgets.QApplication(sys.argv)
-    # controller = Controller()
-    # controller.show_login()
-    # sys.exit(app.exec_())
-    
+if __name__ == "__main__":    
     app = QtWidgets.QApplication(sys.argv)
     win = Ui_Form()
 
-    # win.setupUi()
-    # win.retranslateUi()
-    # xpos, ypos = 0,100
-    # widthPx = 1280
-    # heightPx = 1024
-    # win.setGeometry(xpos, ypos, widthPx, heightPx)
-    # win.setWindowTitle("Main Window")
-
-    # label = QtWidgets.QLabel(win)
-    # label.setText("My First Label")
-    # label.move(50,50)
 
 
     win.show()

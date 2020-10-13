@@ -78,6 +78,6 @@ def simulateCustomInput(filename, showPlot=True):
     return time
 
 if __name__ == "__main__":
-    simulateCustomInput('FMI Testing/FeedBack.fmu')
+    simulateCustomInput('FeedBack/FeedBack.fmu')
 
 

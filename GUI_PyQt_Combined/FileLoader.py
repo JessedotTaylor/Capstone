@@ -8,11 +8,11 @@ class PresetFile:
         self.runTimeS = 0
         self.minPressure = 99
         self.lastAccess = ''
+        self.runTime = ''
 
         self.loadFile(pathToFile)
 
     def loadFile(self, pathToFile):
-        numbers = [0,1,2,3,4,5,6,7,8,9]
         with open(pathToFile, 'r') as f:            #NEEDS ERROR HANDLING
             lines = f.readlines()
         
@@ -45,6 +45,7 @@ class PresetFile:
         self.getMaxForce()
         self.getMaxTemp()
         self.getLastAccess(pathToFile)
+        self.getTimeRead()
 
 
     def getLastAccess(self, pathToFile=None):
@@ -112,10 +113,16 @@ class PresetFile:
         return self.runTimeS
     
     def getTimeRead(self):
-        return self.lineDic['Run Time']
+        if self.runTime == '':
+            lst = self.getTimeLst()
+            lastTime = lst[-1]
+            hrs = str(int(lastTime // 60))
+            mins = str(int(lastTime % 60))
+            self.runTime = ':'.join([hrs, mins, '00'])
+        return self.runTime
 
         
 if __name__ == "__main__":
-    PresetFile('Presets/test1.csv')
+    PresetFile('GUI_PyQt_Combined/Presets/test1.csv')
 
 

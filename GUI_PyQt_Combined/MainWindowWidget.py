@@ -9,17 +9,17 @@ class Ui_MainWindow(QtWidgets.QWidget):
         # switch_window_Network = QtCore.pyqtSignal(str)
         # switch_window_Settings = QtCore.pyqtSignal(str)
 
-        def __init__(self):
+        def __init__(self, width, height):
                 QtWidgets.QWidget.__init__(self)
                 self.setObjectName("MainWindow")
-                self.resize(1280, 1024)
+                self.resize(width, height)
                 sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
                 sizePolicy.setHorizontalStretch(0)
                 sizePolicy.setVerticalStretch(0)
                 sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
                 self.setSizePolicy(sizePolicy)
-                self.setMinimumSize(QtCore.QSize(1280, 1024))
-                self.setMaximumSize(QtCore.QSize(1280, 1024))
+                self.setMinimumSize(QtCore.QSize(width, height))
+                self.setMaximumSize(QtCore.QSize(width, height))
                 self.centralwidget = QtWidgets.QWidget(self)
                 self.centralwidget.setEnabled(True)
                 sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)

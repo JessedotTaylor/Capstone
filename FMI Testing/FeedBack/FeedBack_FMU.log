@@ -1,0 +1,6 @@
+mingw32-make: Entering directory 'C:/Users/jt/AppData/Local/Temp/OPENMO~1/OMEdit/FeedBack'
+rm -f FeedBack.fmutmp/sources/FeedBack_init.xml
+cp -a "F:/OpenModelica1.16.0-dev.03-64bit/share/omc/runtime/c/fmi/buildproject/"* FeedBack.fmutmp/sources
+cp -a FeedBack_FMU.libs FeedBack.fmutmp/sources/
+mingw32-make: Leaving directory 'C:/Users/jt/AppData/Local/Temp/OPENMO~1/OMEdit/FeedBack'
+RESULT: 0 
