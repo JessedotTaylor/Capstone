@@ -14,9 +14,11 @@ import sys
 
 class Ui_DiskStartWidget(QtWidgets.QWidget):
     switch_window = QtCore.pyqtSignal(str, str)
+    save_preset = QtCore.pyqtSignal(str)
 
-    def __init__(self, dirPath, width, height, showPresetButton=True):
+    def __init__(self, dirPath, width, height, root, showPresetButton=True):
         self.showPresetButton = showPresetButton
+        self.root = root
         QtWidgets.QWidget.__init__(self)
         self.setObjectName("DiskStartWidget")
         self.resize(width, height)
@@ -73,6 +75,11 @@ class Ui_DiskStartWidget(QtWidgets.QWidget):
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
 
+        self.backButton.setFont(font)
+        self.copyStatusLabel = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.copyStatusLabel.setObjectName("copyStatusLabel")
+        self.horizontalLayout.addWidget(self.copyStatusLabel)
+
         
         if showPresetButton:
             self.SaveAsPresetButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
@@ -117,15 +124,17 @@ class Ui_DiskStartWidget(QtWidgets.QWidget):
         if self.showPresetButton:
             self.SaveAsPresetButton.setText(_translate("DiskStartWidget", "Save As Preset"))
         self.NextButton.setText(_translate("DiskStartWidget", "Next Button"))
+        # self.copyStatusLabel.setText(_translate("DiskStartWidget", "Hellow WOrld"))
 
     def setSrcDir(self, srcDir):
         print("Set Source Dir called: {}".format(srcDir))
 
     def switch(self, switchTo):
-        self.switch_window.emit(switchTo, "file")
+        self.switch_window.emit(switchTo, self.root)
 
     def savePreset(self):
         print("Save selected preset called")
+        self.save_preset.emit(self.path)
     
     def onClicked(self, index):
         # self.sender() == self.treeView
@@ -160,7 +169,7 @@ if __name__ == "__main__":
         startFilePath = 'C:\\'
     elif os == 'Linux':
         startFilePath = '/home/pi/Documents/GUI_PyQt_Combined'
-    win = Ui_DiskStartWidget(startFilePath)
+    win = Ui_DiskStartWidget(startFilePath, 1240,1024,'usr')
 
     win.show()
     sys.exit(app.exec_())

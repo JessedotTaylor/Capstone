@@ -1,0 +1,10 @@
+Name,Silicon Film Test,,
+User Notes,0.51mm Thick - 175mm Diameter,,
+,,,
+Time (min),Force,Temp,Press
+0,0,~,~
+10,14000,170,0
+60,20000,140,0
+90,6000,~,0
+120,3000,~,~
+130,0,~,~

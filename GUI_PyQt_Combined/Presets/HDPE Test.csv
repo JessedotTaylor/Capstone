@@ -1,0 +1,10 @@
+Name,HDPE Test,,
+User Notes,1.65mm Thick - 200mm Diameter,,
+,,,
+Time (min),Force,Temp,Press
+0,0,~,~
+10,20000,200,0
+60,20000,200,0
+90,20000,~,0
+120,20000,~,~
+130,0,~,~

@@ -82,14 +82,14 @@ class Ui_FileStartWidget(QtWidgets.QWidget):
     def updateScreen(self, filePath):
         _translate = QtCore.QCoreApplication.translate
         self.file = FileLoader.PresetFile(filePath)
-        self.presetName.setText(_translate("FileStartWidget", self.file.getName()))
+        self.presetName.setText(_translate("FileStartWidget", "\t" + self.file.getName()))
         
-        setStr = ("File Details:\n" + str(self.file.getDetails()) + 
-        "\nRun Time (hr:min:sec):\n" + str(self.file.getTimeRead()) + 
-        "\nMax Temp:\n" + str(self.file.getMaxTemp()) + 
-        " °C\nMax Force:\n{:,.0f}".format(self.file.getMaxForce()) +
-        " N\nMin Pressure:\n" + str(self.file.getMinPressure()) + 
-        " Pa\nLast Time Accessed:\n" + str(self.file.getLastAccess()))
+        setStr = ("\tTest Details:\n\t  " + str(self.file.getDetails()) + 
+        "\t\n\tRun Time (hr:min:sec):\t\n\t  " + str(self.file.getTimeRead()) + 
+        "\n\tMax Temp:\n\t  " + str(self.file.getMaxTemp()) + 
+        " °C\n\tMax Force:\n\t  {:,.0f}".format(self.file.getMaxForce()) +
+        " N\n\tMin Pressure:\n\t  " + str(self.file.getMinPressure()) + 
+        " Pa\n\tLast Time Accessed:\n\t  " + str(self.file.getLastAccess()))
         
         self.presetDetails.setText(_translate("FileStartWidget", setStr))
         self.a2 = pg.AxisItem("left")

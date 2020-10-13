@@ -84,7 +84,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 self.diskButton.setFont(font)
                 self.diskButton.setObjectName("diskButton")
                 self.verticalLayout.addWidget(self.diskButton, 0, QtCore.Qt.AlignHCenter)
-                self.diskButton.clicked.connect(lambda: self.switch("disk"))
+                self.diskButton.clicked.connect(lambda: self.switch("file"))
 
                 self.settingsButton = QtWidgets.QPushButton(self.horizontalLayoutWidget)
                 sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)

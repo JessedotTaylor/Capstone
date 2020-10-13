@@ -1,0 +1,16 @@
+{
+    "use_defaults" : true,
+    "changes" : false,
+    "DEFAULTS" : {
+        "Root_Directory" : "/home/pi/Documents/GUI_PyQt_Combined/",
+        "Network_Directory" : "/home/pi/Documents/GUI_PyQt_Combined/Network/",
+        "Presets_Directory" : "/home/pi/Documents/GUI_PyQt_Combined/Presets/",
+
+        "Full_Screen_Mode": true,
+        "Width" : 1240,
+        "Height" : 1024,
+        "use_background" : true,
+        "key_list" : ["Root_Directory", "Network_Directory", "Presets_Directory", "Full_Screen_Mode", "Width", "Height", "use_defaults", "changes", "use_background", "DEFAULTS"]
+    }
+}
+
